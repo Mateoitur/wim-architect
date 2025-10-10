@@ -5,7 +5,7 @@ import Image from "next/image"
 const Home = () => {
   return (
     <section>
-      <div className='p-5 '>
+      <div className='p-5'>
         <div className='h-[calc(100vh-40px)] rounded-xl overflow-hidden'>
           <Image
             src={HomeImage}
