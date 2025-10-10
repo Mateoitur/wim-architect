@@ -2,6 +2,21 @@ import React from "react"
 import LogoImage from "@/assets/images/logo.png"
 import Image from "next/image"
 import { Button } from "./ui/button"
+import Link from "next/link"
+import StaggeredMenu from "./ui/StaggeredMenu"
+
+const menuItems = [
+  { label: "Home", ariaLabel: "Go to home page", link: "/" },
+  { label: "About", ariaLabel: "Learn about us", link: "/about" },
+  { label: "Our Work", ariaLabel: "View our services", link: "/services" },
+  { label: "Sustainable Design", ariaLabel: "Get in touch", link: "/contact" },
+  {
+    label: "Materials & Innovation",
+    ariaLabel: "Get in touch",
+    link: "/contact",
+  },
+  { label: "Contact Us", ariaLabel: "Get in touch", link: "/contact" },
+]
 
 const Navbar = () => {
   return (
@@ -12,13 +27,27 @@ const Navbar = () => {
           <span>W I M</span>
         </div>
 
-        <div className='flex gap-3'>
-          <a href=''>
+        <div className='flex md:hidden overflow-visible'>
+          <StaggeredMenu
+            position='right'
+            items={menuItems}
+            menuButtonColor='#333333'
+            openMenuButtonColor='#333333'
+            changeMenuColorOnOpen={true}
+            colors={["#333333", "#333333"]}
+            displayItemNumbering={false}
+            accentColor='#333333'
+            logoUrl={LogoImage.src}
+            isFixed={true}
+          />
+        </div>
+        <div className='hidden md:flex gap-3'>
+          <Link href='/'>
             <Button>Home</Button>
-          </a>
-          <a href=''>
+          </Link>
+          <Link href='/about'>
             <Button>About</Button>
-          </a>
+          </Link>
           <a href=''>
             <Button>Our Work</Button>
           </a>

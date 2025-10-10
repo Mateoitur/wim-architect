@@ -110,6 +110,10 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+.sm-scope .sm-panel-item {
+  font-size: clamp(1.75rem, 8vw, 3rem);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
