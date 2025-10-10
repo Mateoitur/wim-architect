@@ -3,6 +3,7 @@ import localFont from "next/font/local"
 import "./globals.css"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import LogoIcon from "@/assets/images/logo.png"
 
 const neue = localFont({
   src: [
@@ -32,7 +33,7 @@ const neue = localFont({
 })
 
 export const metadata: Metadata = {
-  title: "W I M Architect",
+  title: "W I M",
   description: "Materialise dreams.",
 }
 
