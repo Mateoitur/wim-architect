@@ -34,7 +34,7 @@ const Navbar = () => {
             menuButtonColor='#333333'
             openMenuButtonColor='#333333'
             changeMenuColorOnOpen={true}
-            colors={["#333333", "#333333"]}
+            colors={["transparent"]}
             displayItemNumbering={false}
             accentColor='#333333'
             logoUrl={LogoImage.src}
