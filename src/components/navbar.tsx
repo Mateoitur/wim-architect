@@ -31,8 +31,8 @@ const Navbar = () => {
           <StaggeredMenu
             position='right'
             items={menuItems}
-            menuButtonColor='#333333'
-            openMenuButtonColor='#333333'
+            menuButtonColor='#FFFFFF'
+            openMenuButtonColor='#FFFFFFdd'
             changeMenuColorOnOpen={true}
             colors={["transparent"]}
             displayItemNumbering={false}
