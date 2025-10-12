@@ -32,6 +32,12 @@ const neue = localFont({
   display: "swap",
 })
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+}
+
 export const metadata: Metadata = {
   title: "W I M",
   description: "Materialise dreams.",
