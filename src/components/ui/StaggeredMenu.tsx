@@ -506,13 +506,9 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         <aside
           id='staggered-menu-panel'
           ref={panelRef}
-          className='staggered-menu-panel absolute top-0 right-0 h-full bg-white/80 backdrop-blur-3xl flex flex-col px-8 overflow-y-auto z-10'
+          className='staggered-menu-panel absolute inset-0 h-full bg-white/80 backdrop-blur-4xl flex flex-col overflow-y-auto z-10'
           style={{
             WebkitBackdropFilter: "blur(12px)",
-            // 6em top padding + safe area
-            paddingTop: "calc(6em + env(safe-area-inset-top, 0px))",
-            // 2em bottom padding + safe area
-            paddingBottom: "calc(2em + env(safe-area-inset-bottom, 0px))",
           }}
           aria-hidden={!open}
         >
@@ -610,7 +606,7 @@ relative; padding: 2px 0; display: inline-block; transition: color 0.3s ease, op
 .sm-scope .sm-socials-link:hover { color: var(--sm-accent, #ff0000); }
 .sm-scope .sm-panel-title { margin: 0; font-size: 1rem; font-weight: 600; color: #fff; text-transform: uppercase; }
 .sm-scope .sm-panel-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
-.sm-scope .sm-panel-item { position: relative; color: #FFFFFFDD; font-weight: 600; font-size: 3.5rem; cursor: pointer; line-height: 1.2; letter-spacing: -1px; text-transform: uppercase; transition: background 0.25s, color 0.25s; display: inline-block; text-decoration: none; padding-right: 1.4em; }
+.sm-scope .sm-panel-item { position: relative; color: #FFFFFFDD; font-weight: 600; font-size: 3rem; cursor: pointer; line-height: 1.2; letter-spacing: -1px; text-transform: uppercase; transition: background 0.25s, color 0.25s; display: inline-block; text-decoration: none; padding-right: 1.4em; }
 .sm-scope .sm-panel-itemLabel { display: inline-block; will-change: transform; transform-origin: 50% 100%; }
 .sm-scope .sm-panel-item:hover { color: var(--sm-accent, #ff0000); }
 .sm-scope .sm-panel-list[data-numbering] { counter-reset: smItem; }
