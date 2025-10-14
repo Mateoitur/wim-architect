@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <section>
       <div className='p-5'>
-        <div className='h-[calc(100vh-40px)] rounded-xl overflow-hidden'>
+        <div className='h-[calc(100dvh-40px)] inset-0 rounded-xl overflow-hidden'>
           <Image
             src={HomeImage}
             alt='Home Image'
