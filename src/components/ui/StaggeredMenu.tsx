@@ -74,6 +74,40 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 
   const itemEntranceTweenRef = useRef<gsap.core.Tween | null>(null)
 
+  // Scroll lock helpers to disable background scrolling when menu is open (iOS-safe)
+  const scrollLock = React.useRef({
+    y: 0,
+    lock() {
+      if (typeof window === "undefined") return
+      if (document.body.dataset.smLocked === "1") return
+      this.y = window.scrollY || window.pageYOffset || 0
+      const style = document.body.style
+      style.position = "fixed"
+      style.top = `-${this.y}px`
+      style.left = "0"
+      style.right = "0"
+      style.width = "100%"
+      style.overflow = "hidden"
+      document.documentElement.style.overscrollBehavior = "none"
+      document.body.dataset.smLocked = "1"
+    },
+    unlock() {
+      if (typeof window === "undefined") return
+      if (document.body.dataset.smLocked !== "1") return
+      const style = document.body.style
+      const top = parseInt(style.top || "0") || -this.y
+      style.position = ""
+      style.top = ""
+      style.left = ""
+      style.right = ""
+      style.width = ""
+      style.overflow = ""
+      document.documentElement.style.overscrollBehavior = ""
+      delete document.body.dataset.smLocked
+      window.scrollTo(0, -top)
+    },
+  }).current
+
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const panel = panelRef.current
@@ -405,6 +439,19 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
     onMenuClose,
   ])
 
+  // Lock/unlock page scroll when menu state changes
+  React.useEffect(() => {
+    if (open) {
+      scrollLock.lock()
+    } else {
+      scrollLock.unlock()
+    }
+    return () => {
+      // Ensure unlock on unmount
+      scrollLock.unlock()
+    }
+  }, [open, scrollLock])
+
   return (
     <div
       className={`sm-scope z-40 ${
@@ -593,7 +640,24 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 .sm-scope .sm-panel-itemWrap { position: relative; overflow: hidden; line-height: 1; }
 .sm-scope .sm-icon-line { position: absolute; left: 50%; top: 50%; width: 100%; height: 2px; background: currentColor; border-radius: 2px; transform: translate(-50%, -50%); will-change: transform; }
 .sm-scope .sm-line { display: none !important; }
-.sm-scope .staggered-menu-panel { position: absolute; inset: 0; width: 100%; min-height: 100dvh; background: transparent; backdrop-filter: blur(50px); -webkit-backdrop-filter: blur(12px); display: flex; flex-direction: column; padding: 6em 2em 2em 2em; overflow-y: auto; z-index: 10; }
+.sm-scope .staggered-menu-panel { position: absolute; inset: 0; width: 100%;
+  /* Ensure the panel covers the full screen including iOS browser UI areas */
+  height: 100vh; /* fallback */
+  height: 100dvh; /* modern dynamic viewport */
+  height: 100lvh; /* cover under address bar/dynamic island */
+  min-height: 100vh;
+  min-height: 100dvh;
+  min-height: 100lvh;
+  background: transparent; backdrop-filter: blur(50px); -webkit-backdrop-filter: blur(12px);
+  display: flex; flex-direction: column;
+  /* Respect iOS safe areas so text isn't clipped under the Dynamic Island or bottom bar */
+  padding-top: calc(6em + constant(safe-area-inset-top));
+  padding-top: calc(6em + env(safe-area-inset-top));
+  padding-right: 2em;
+  padding-bottom: calc(2em + constant(safe-area-inset-bottom));
+  padding-bottom: calc(2em + env(safe-area-inset-bottom));
+  padding-left: 2em;
+  overflow-y: auto; z-index: 10; }
 .sm-scope [data-position='left'] .staggered-menu-panel { right: auto; left: 0; }
 .sm-scope .sm-prelayers { position: absolute; top: 0; right: 0; bottom: 0; width: clamp(260px, 38vw, 420px); pointer-events: none; z-index: 5; }
 .sm-scope [data-position='left'] .sm-prelayers { right: auto; left: 0; }
