@@ -127,7 +127,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
       preLayerElsRef.current = preLayers
 
       const offscreen = position === "left" ? -100 : 100
-      gsap.set([panel, ...preLayers], { xPercent: offscreen })
+      gsap.set([panel, ...preLayers], { xPercent: offscreen, visibility: "hidden" })
 
       gsap.set(plusH, { transformOrigin: "50% 50%", rotate: 0 })
       gsap.set(plusV, { transformOrigin: "50% 50%", rotate: 90 })
@@ -145,9 +145,6 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
     const panel = panelRef.current
     const layers = preLayerElsRef.current
     if (!panel) return null
-
-      gsap.set([panel, ...layers], { visibility: 'visible' })
-
 
       openTlRef.current?.kill()
     if (closeTweenRef.current) {
@@ -262,23 +259,32 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 
     openTlRef.current = tl
     return tl
-  }, [position])
+  }, [])
 
-  const playOpen = useCallback(() => {
-    if (busyRef.current) return
-    busyRef.current = true
-    const tl = buildOpenTimeline()
-    if (tl) {
-      tl.eventCallback("onComplete", () => {
-        busyRef.current = false
-      })
-      tl.play(0)
-    } else {
-      busyRef.current = false
-    }
-  }, [buildOpenTimeline])
+    const playOpen = useCallback(() => {
+        if (busyRef.current) return;
+        busyRef.current = true;
 
-  const playClose = useCallback(() => {
+        // NEW: ensure first-open start position is truly offscreen
+        const panel = panelRef.current;
+        const layers = preLayerElsRef.current;
+        const off = position === "left" ? -100 : 100;
+        if (panel) gsap.set([panel, ...layers], { visibility:"visible", xPercent: off });
+
+        const tl = buildOpenTimeline();
+        if (tl) {
+            tl.invalidate();           // (optional but helps in dev)
+            tl.eventCallback("onComplete", () => {
+                busyRef.current = false;
+            });
+            tl.play(0);
+        } else {
+            busyRef.current = false;
+        }
+    }, [buildOpenTimeline, position]);
+
+
+    const playClose = useCallback(() => {
     openTlRef.current?.kill()
     openTlRef.current = null
     itemEntranceTweenRef.current?.kill()
@@ -298,6 +304,8 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
       ease: "power3.in",
       overwrite: "auto",
       onComplete: () => {
+
+          gsap.set(all, { visibility: "hidden" })
         const itemEls = Array.from(
           panel.querySelectorAll(".sm-panel-itemLabel")
         ) as HTMLElement[]
@@ -656,7 +664,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   overflow-y: auto; z-index: 10; }
 .sm-scope [data-position='left'] .staggered-menu-panel { right: auto; left: 0; }
 .sm-scope .sm-prelayers {  position: absolute; inset: 0; width: 100%; pointer-events: none; z-index: 5; }
-.sm-scope [data-position='left'] .sm-prelayers { visibility: hidden; right: auto; left: 0; }
+.sm-scope [data-position='left'] .sm-prelayers { right: auto; left: 0; }
 .sm-scope .sm-prelayer { position: absolute; inset: 0; width: 100%; transform: translateX(0); }
 .sm-scope .sm-panel-inner { flex: 1; display: flex; flex-direction: column; gap: 1.25rem; }
 .sm-scope .sm-socials { margin-top: auto; padding-top: 2rem; display: flex; flex-direction: column; gap: 0.75rem; }
