@@ -1,8 +1,7 @@
 "use client"
 
-import React, { useCallback, useLayoutEffect, useRef, useState } from "react"
-import { gsap } from "gsap"
-import Image from "next/image"
+import React, {useCallback, useLayoutEffect, useRef, useState} from "react"
+import {gsap} from "gsap"
 
 export interface StaggeredMenuItem {
   label: string
@@ -496,55 +495,44 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         </div>
 
         <header
-          className='staggered-menu-header absolute top-5 right-5 w-auto flex items-center justify-end bg-transparent pointer-events-none z-20'
+          className='staggered-menu-header absolute w-auto flex items-center justify-end bg-transparent pointer-events-none z-20'
           aria-label='Main navigation header'
         >
-          <button
-            ref={toggleBtnRef}
-            className={`sm-toggle relative inline-flex items-center gap-[0.3rem] bg-transparent border-0 cursor-pointer font-medium leading-none overflow-visible pointer-events-auto ${
-              open ? "text-black" : "text-[#e9e9ef]"
-            }`}
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
-            aria-controls='staggered-menu-panel'
-            onClick={toggleMenu}
-            type='button'
-          >
-            <span
-              ref={textWrapRef}
-              className='sm-toggle-textWrap relative inline-block h-[1em] overflow-hidden whitespace-nowrap w-[var(--sm-toggle-width,auto)] min-w-[var(--sm-toggle-width,auto)]'
-              aria-hidden='true'
+            <button
+                ref={toggleBtnRef}
+                type="button"
+                onClick={toggleMenu}
+                aria-label={open ? 'Close menu' : 'Open menu'}
+                aria-expanded={open}
+                aria-controls='staggered-menu-panel'
+                className={[
+                    'sm-toggle relative inline-flex items-center justify-center pointer-events-auto',
+                    'w-10 h-10 rounded-full border-0 cursor-pointer p-0',
+                    'shadow-[0_4px_16px_rgba(0,0,0,0.12)] bg-white'
+                ].join(' ')}
             >
-              <span
-                ref={textInnerRef}
-                className='sm-toggle-textInner flex flex-col leading-none'
-              >
-                {textLines.map((l, i) => (
-                  <span
-                    className='sm-toggle-line block h-[1em] leading-none'
-                    key={i}
-                  >
-                    {l}
-                  </span>
-                ))}
-              </span>
-            </span>
-
-            <span
-              ref={iconRef}
-              className='sm-icon relative w-[14px] h-[14px] shrink-0 inline-flex items-center justify-center [will-change:transform]'
-              aria-hidden='true'
-            >
-              <span
-                ref={plusHRef}
-                className='sm-icon-line absolute left-1/2 top-1/2 w-full h-[2px] bg-current rounded-[2px] -translate-x-1/2 -translate-y-1/2 [will-change:transform]'
-              />
-              <span
-                ref={plusVRef}
-                className='sm-icon-line sm-icon-line-v absolute left-1/2 top-1/2 w-full h-[2px] bg-current rounded-[2px] -translate-x-1/2 -translate-y-1/2 [will-change:transform]'
-              />
-            </span>
-          </button>
+                <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 leading-none">
+      <span
+          className="menu-line block rounded-[2px]"
+          style={{
+              width: 20,
+              height: 1,
+              background: '#333333',
+              transform: open ? 'translateY(4px) rotate(45deg)' : 'translateY(0px)'
+          }}
+      />
+      <span
+          className="menu-line block rounded-[2px]"
+          style={{
+              width: 20,
+              height: 1,
+              marginTop: 6,
+              background: '#333333',
+              transform: open ? 'translateY(-4px) rotate(-45deg)' : 'translateY(0px)'
+          }}
+      />
+    </span>
+            </button>
         </header>
 
         <aside
@@ -626,11 +614,14 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
       </div>
 
       <style>{`
+      .sm-scope .menu-line{
+  transition: transform .3s ease, opacity .3s ease;
+  transform-origin: center;
+}
+
 .sm-scope .staggered-menu-wrapper { position: relative; width: 100%; height: 100%; z-index: 40; }
 .sm-scope .staggered-menu-header { position: absolute; width: 100%; display: flex; align-items: center; padding: 2em; background: transparent; pointer-events: none; z-index: 20; }
 .sm-scope .staggered-menu-header > * { pointer-events: auto; }
-.sm-scope .sm-toggle { position: relative; display: inline-flex; align-items: center; gap: 0.3rem; background: transparent; border: none; cursor: pointer; color: #FFFFFF; font-weight: 500; line-height: 1; overflow: visible; }
-.sm-scope .sm-toggle:focus-visible { outline: 2px solid #FFFFFF; outline-offset: 4px; border-radius: 4px; }
 .sm-scope .sm-line:last-of-type { margin-top: 6px; }
 .sm-scope .sm-toggle-textWrap { position: relative; margin-right: 0.5em; display: inline-block; height: 1em; overflow: hidden; white-space: nowrap; width: var(--sm-toggle-width, auto); min-width: var(--sm-toggle-width, auto); }
 .sm-scope .sm-toggle-textInner { display: flex; flex-direction: column; line-height: 1; }
