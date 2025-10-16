@@ -146,7 +146,10 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
     const layers = preLayerElsRef.current
     if (!panel) return null
 
-    openTlRef.current?.kill()
+      gsap.set([panel, ...layers], { visibility: 'visible' })
+
+
+      openTlRef.current?.kill()
     if (closeTweenRef.current) {
       closeTweenRef.current.kill()
       closeTweenRef.current = null
@@ -473,6 +476,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
           ref={preLayersRef}
           className='sm-prelayers absolute inset-0 pointer-events-none z-[5]'
           aria-hidden='true'
+          style={{ visibility: 'hidden' }}
         >
           {(() => {
             const raw =
@@ -541,6 +545,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
           className='staggered-menu-panel absolute inset-0 bg-white/80 backdrop-blur-4xl flex flex-col overflow-y-auto z-10'
           style={{
             WebkitBackdropFilter: "blur(12px)",
+              visibility: 'hidden',
           }}
           aria-hidden={!open}
         >
@@ -650,8 +655,8 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   padding-left: 2em;
   overflow-y: auto; z-index: 10; }
 .sm-scope [data-position='left'] .staggered-menu-panel { right: auto; left: 0; }
-.sm-scope .sm-prelayers { position: absolute; inset: 0; width: 100%; pointer-events: none; z-index: 5; }
-.sm-scope [data-position='left'] .sm-prelayers { right: auto; left: 0; }
+.sm-scope .sm-prelayers {  position: absolute; inset: 0; width: 100%; pointer-events: none; z-index: 5; }
+.sm-scope [data-position='left'] .sm-prelayers { visibility: hidden; right: auto; left: 0; }
 .sm-scope .sm-prelayer { position: absolute; inset: 0; width: 100%; transform: translateX(0); }
 .sm-scope .sm-panel-inner { flex: 1; display: flex; flex-direction: column; gap: 1.25rem; }
 .sm-scope .sm-socials { margin-top: auto; padding-top: 2rem; display: flex; flex-direction: column; gap: 0.75rem; }
