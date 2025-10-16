@@ -33,7 +33,7 @@ const Navbar = () => {
             items={menuItems}
             menuButtonColor='#FFFFFF'
             openMenuButtonColor='#FFFFFFdd'
-            changeMenuColorOnOpen={true}
+            changeMenuColorOnOpen={false}
             colors={["transparent"]}
             displayItemNumbering={false}
             accentColor='#333333'

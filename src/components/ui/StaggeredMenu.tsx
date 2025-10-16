@@ -39,7 +39,6 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   displaySocials = true,
   displayItemNumbering = true,
   className,
-  logoUrl = "/src/assets/logos/reactbits-gh-white.svg",
   menuButtonColor = "#fff",
   openMenuButtonColor = "#fff",
   changeMenuColorOnOpen = true,
@@ -455,7 +454,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   return (
     <div
       className={`sm-scope z-40 ${
-        isFixed ? "fixed inset-0 w-screen" : "w-full h-full"
+        isFixed ? "fixed inset-5 rounded-xl overflow-hidden" : "w-full h-full"
       }`}
     >
       <div
@@ -473,7 +472,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
       >
         <div
           ref={preLayersRef}
-          className='sm-prelayers fixed inset-0 pointer-events-none z-[5]'
+          className='sm-prelayers absolute inset-0 pointer-events-none z-[5]'
           aria-hidden='true'
         >
           {(() => {
@@ -497,7 +496,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         </div>
 
         <header
-          className='staggered-menu-header absolute top-8 right-8 w-full flex items-center justify-end p-[2em] bg-transparent pointer-events-none z-20'
+          className='staggered-menu-header absolute top-5 right-5 w-auto flex items-center justify-end bg-transparent pointer-events-none z-20'
           aria-label='Main navigation header'
         >
           <button
@@ -551,7 +550,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         <aside
           id='staggered-menu-panel'
           ref={panelRef}
-          className='staggered-menu-panel inset-0 bg-white/80 backdrop-blur-4xl flex flex-col overflow-y-auto z-10'
+          className='staggered-menu-panel absolute inset-0 bg-white/80 backdrop-blur-4xl flex flex-col overflow-y-auto z-10'
           style={{
             WebkitBackdropFilter: "blur(12px)",
           }}
@@ -570,7 +569,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
                     key={it.label + idx}
                   >
                     <a
-                      className='sm-panel-item relative text-black font-semibold text-[4rem] cursor-pointer leading-none tracking-[-2px] uppercase transition-[background,color] duration-150 ease-linear inline-block no-underline pr-[1.4em]'
+                      className='sm-panel-item relative text-white font-semibold text-[4rem] cursor-pointer leading-none tracking-[-2px] uppercase transition-[background,color] duration-150 ease-linear inline-block no-underline pr-[1.4em]'
                       href={it.link}
                       aria-label={it.ariaLabel}
                       data-index={idx + 1}
@@ -640,7 +639,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 .sm-scope .sm-panel-itemWrap { position: relative; overflow: hidden; line-height: 1; }
 .sm-scope .sm-icon-line { position: absolute; left: 50%; top: 50%; width: 100%; height: 2px; background: currentColor; border-radius: 2px; transform: translate(-50%, -50%); will-change: transform; }
 .sm-scope .sm-line { display: none !important; }
-.sm-scope .staggered-menu-panel { position: fixed; inset: 0; width: 100%;
+.sm-scope .staggered-menu-panel { position: absolute; inset: 0; width: 100%;
   /* Ensure the panel covers the full screen including iOS browser UI areas */
   height: -webkit-fill-available; /* extra iOS fallback */
   height: 100vh; /* fallback */
@@ -660,7 +659,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   padding-left: 2em;
   overflow-y: auto; z-index: 10; }
 .sm-scope [data-position='left'] .staggered-menu-panel { right: auto; left: 0; }
-.sm-scope .sm-prelayers { position: fixed; top: 0; right: 0; bottom: 0; width: clamp(260px, 38vw, 420px); pointer-events: none; z-index: 5; }
+.sm-scope .sm-prelayers { position: absolute; inset: 0; width: 100%; pointer-events: none; z-index: 5; }
 .sm-scope [data-position='left'] .sm-prelayers { right: auto; left: 0; }
 .sm-scope .sm-prelayer { position: absolute; inset: 0; width: 100%; transform: translateX(0); }
 .sm-scope .sm-panel-inner { flex: 1; display: flex; flex-direction: column; gap: 1.25rem; }
@@ -668,8 +667,8 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 relative; padding: 2px 0; display: inline-block; transition: color 0.3s ease, opacity 0.3s ease; }
 .sm-scope .sm-socials-link:hover { color: var(--sm-accent, #ff0000); }
 .sm-scope .sm-panel-title { margin: 0; font-size: 1rem; font-weight: 600; color: #fff; text-transform: uppercase; }
-.sm-scope .sm-panel-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
-.sm-scope .sm-panel-item { position: relative; color: #FFFFFFDD; font-weight: 600; font-size: 3rem; cursor: pointer; line-height: 1.2; letter-spacing: -1px; text-transform: uppercase; transition: background 0.25s, color 0.25s; display: inline-block; text-decoration: none; padding-right: 1.4em; }
+.sm-scope .sm-panel-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1.5rem; }
+.sm-scope .sm-panel-item { position: relative; color: #FFFFFFDD; font-weight: 600; font-size: 2.5rem; cursor: pointer; line-height: 1.2; letter-spacing: -1px; text-transform: uppercase; transition: background 0.25s, color 0.25s; display: inline-block; text-decoration: none; padding-right: 1.4em; }
 .sm-scope .sm-panel-itemLabel { display: inline-block; will-change: transform; transform-origin: 50% 100%; }
 .sm-scope .sm-panel-item:hover { color: var(--sm-accent, #ff0000); }
 .sm-scope .sm-panel-list[data-numbering] { counter-reset: smItem; }
